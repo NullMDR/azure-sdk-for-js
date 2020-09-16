@@ -113,20 +113,6 @@ export class Profiles {
   }
 
   /**
-   * Creates a new CDN profile with a profile name under the specified subscription and resource
-   * group.
-   * @param resourceGroupName Name of the Resource group within the Azure subscription.
-   * @param profileName Name of the CDN profile which is unique within the resource group.
-   * @param profile Profile properties needed to create a new profile.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ProfilesCreateResponse>
-   */
-  create(resourceGroupName: string, profileName: string, profile: Models.Profile, options?: msRest.RequestOptionsBase): Promise<Models.ProfilesCreateResponse> {
-    return this.beginCreate(resourceGroupName,profileName,profile,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ProfilesCreateResponse>;
-  }
-
-  /**
    * Updates an existing CDN profile with the specified profile name under the specified subscription
    * and resource group.
    * @param resourceGroupName Name of the Resource group within the Azure subscription.
@@ -251,27 +237,6 @@ export class Profiles {
       },
       listResourceUsageOperationSpec,
       callback) as Promise<Models.ProfilesListResourceUsageResponse>;
-  }
-
-  /**
-   * Creates a new CDN profile with a profile name under the specified subscription and resource
-   * group.
-   * @param resourceGroupName Name of the Resource group within the Azure subscription.
-   * @param profileName Name of the CDN profile which is unique within the resource group.
-   * @param profile Profile properties needed to create a new profile.
-   * @param [options] The optional parameters
-   * @returns Promise<msRestAzure.LROPoller>
-   */
-  beginCreate(resourceGroupName: string, profileName: string, profile: Models.Profile, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
-    return this.client.sendLRORequest(
-      {
-        resourceGroupName,
-        profileName,
-        profile,
-        options
-      },
-      beginCreateOperationSpec,
-      options);
   }
 
   /**
@@ -538,44 +503,6 @@ const listResourceUsageOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.ResourceUsageListResult
-    },
-    default: {
-      bodyMapper: Mappers.ErrorResponse
-    }
-  },
-  serializer
-};
-
-const beginCreateOperationSpec: msRest.OperationSpec = {
-  httpMethod: "PUT",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}",
-  urlParameters: [
-    Parameters.resourceGroupName,
-    Parameters.profileName,
-    Parameters.subscriptionId
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  requestBody: {
-    parameterPath: "profile",
-    mapper: {
-      ...Mappers.Profile,
-      required: true
-    }
-  },
-  responses: {
-    200: {
-      bodyMapper: Mappers.Profile
-    },
-    201: {
-      bodyMapper: Mappers.Profile
-    },
-    202: {
-      bodyMapper: Mappers.Profile
     },
     default: {
       bodyMapper: Mappers.ErrorResponse

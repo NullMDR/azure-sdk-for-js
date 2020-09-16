@@ -2925,26 +2925,6 @@ export type ProfilesGetResponse = Profile & {
 };
 
 /**
- * Contains response data for the create operation.
- */
-export type ProfilesCreateResponse = Profile & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: Profile;
-    };
-};
-
-/**
  * Contains response data for the update operation.
  */
 export type ProfilesUpdateResponse = Profile & {
@@ -3021,26 +3001,6 @@ export type ProfilesListResourceUsageResponse = ResourceUsageListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ResourceUsageListResult;
-    };
-};
-
-/**
- * Contains response data for the beginCreate operation.
- */
-export type ProfilesBeginCreateResponse = Profile & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: Profile;
     };
 };
 
